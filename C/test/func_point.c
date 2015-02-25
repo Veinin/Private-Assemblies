@@ -32,7 +32,7 @@ int main(void) {
 	printf("compare_int ret : %d\n", ret);
 	
 	ret = compare_value("hello", "hello", compare_str);
-	printf("compare_strcmp ret : %d\n", ret);
+	printf("compare_str ret : %d\n", ret);
 
 	return 0;
 }
