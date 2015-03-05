@@ -18,6 +18,7 @@ bool ListIsEmpty(LinkList L);
 int  ListLength(LinkList L);
 bool GetElem(LinkList L, int i, ElemType *e);
 bool NextElem(LinkList L, ElemType cur_e, ElemType *next_e);
+bool ListInsert(LinkList L, int i, ElemType e);
 bool ListDelete(LinkList L, int i, ElemType *e);
 void ListTraverse(LinkList L, void(* pfun)(ElemType));
 
