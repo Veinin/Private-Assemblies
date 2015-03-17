@@ -2,7 +2,7 @@
 #define _LINKED_LIST_H_
 #include <stdbool.h>
 
-typedef int ElemType
+typedef int ElemType;
 typedef struct LNode
 {
 	ElemType data;
@@ -13,7 +13,7 @@ typedef LNode * LinkList;
 
 void InitList(LinkList L);
 void DestroList(LinkList *L);
-void ClearList(LinkdList L);
+void ClearList(LinkList L);
 bool ListIsEmpty(LinkList L);
 int  ListLength(LinkList L);
 bool GetElem(LinkList L, int i, ElemType *e);

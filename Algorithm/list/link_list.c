@@ -4,10 +4,10 @@
 
 void
 InitList(LinkList L) {
-	*L = (Linklist) malloc(sizeof(struct LNode));
-	if(!*L)
-		exit(OVERFLOW);
-	(*L)-> next = NULL;
+	L = (LinkList) malloc(sizeof(struct LNode));
+	if(!L)
+		exit(-1);
+	L-> next = NULL;
 }
 
 void
@@ -38,7 +38,7 @@ ListIsEmpty(LinkList L) {
 }
 
 int
-ListLength(Linklist L) {
+ListLength(LinkList L) {
 	int i = 0;
 	LinkList p = L->next;
 	while(p) {
@@ -53,7 +53,7 @@ GetElem(LinkList L, int i, ElemType *e) {
 	int j = 1;
 	LinkList p = L->next;
 	while(p && j < i) {
-		p = p->next
+		p = p->next;
 		j++;
 	}
 
@@ -119,8 +119,8 @@ ListDelete(LinkList L, int i, ElemType *e) {
 }
 
 void
-ListTraverse(LinList L, void(* pfun)(ElemType)) {
-	LinkeList p = L->next;
+ListTraverse(LinkList L, void(* pfun)(ElemType)) {
+	LinkList p = L->next;
 	while(p) {
 		pfun(p->data);
 		p = p->next;
