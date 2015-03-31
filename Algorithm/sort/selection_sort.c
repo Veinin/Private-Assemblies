@@ -12,11 +12,9 @@ selection_sort(int *arr, int len) {
 				min = j;
 		}
 
-		if(i != j) {
-			temp = arr[i];
-			arr[i] = arr[min];
-			arr[min] = temp;
-		}
+		temp = arr[i];
+		arr[i] = arr[min];
+		arr[min] = temp;
 	}
 }
 
