@@ -1,5 +1,5 @@
 CC ?= gcc
-EXE_FILE_NAME ?= main
+EXE_FILE_NAME ?= sort 
 
 all:
 	$(CC) -o $(EXE_FILE_NAME) *.c 
