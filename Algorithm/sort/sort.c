@@ -8,7 +8,7 @@ int
 main(int argc, char *argv[]) {
 	if(argc !=3) {
 		fprintf(stderr, "usage : ./main [sorttype] [quantity]\n");
-		printf("sort type : \n1.selection sort \n2.insertion sort \n3.bubble sort \n4.shell sort \n");
+		printf("sort type : \n1.selection sort \n2.insertion sort \n3.bubble sort \n4.shell sort \n5.quick sort \n");
 		exit(0);
 	}
 
@@ -41,8 +41,12 @@ main(int argc, char *argv[]) {
 		shell_sort(array, N);
 		break;
 
+	case QUICK_SORT:
+		quick_sort(array, 0, N - 1);
+		break;
+
 	default:
-		fprintf(stderr, "sort type not find.\n");
+		fprintf(stderr, "\nsort type not find.\n");
 		exit(0);
 	}
 
