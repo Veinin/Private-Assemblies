@@ -9,13 +9,17 @@ typedef int Item;
 #define BUBBLE_SORT    3
 #define SHELL_SORT     4
 #define QUICK_SORT     5
+#define MERGE_SORT     6
 
-void selection_sort(int *, int);
-void insertion_sort(int *, int, int);
-void bubble_sort(int *, int);
-void shell_sort(int *, int);
+void selection_sort(int *array, int sz);
+void insertion_sort(int *array, int low, int hight);
+void bubble_sort(int *array, int sz);
+void shell_sort(int *array, int sz);
 
-int  partition(int *, int, int);
-void quick_sort(int *, int, int);
+int  partition(int *array, int low, int high);
+void quick_sort(int *, int low, int high);
+
+void merge(int *array, int low, int mid, int high);
+void merge_sort(int *, int low, int last);
 
 #endif //_SORT_H_
