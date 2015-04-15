@@ -10,6 +10,7 @@ typedef int Item;
 #define SHELL_SORT     4
 #define QUICK_SORT     5
 #define MERGE_SORT     6
+#define HEAP_SORT      7
 
 void selection_sort(int *array, int sz);
 void insertion_sort(int *array, int low, int hight);
@@ -21,5 +22,8 @@ void quick_sort(int *, int low, int high);
 
 void merge(int *array, int low, int mid, int high);
 void merge_sort(int *, int low, int last);
+
+void max_heapify(int *array, int root, int sz);
+void heap_sort(int *array, int hsz);
 
 #endif //_SORT_H_
