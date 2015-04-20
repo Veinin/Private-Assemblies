@@ -8,7 +8,7 @@ int
 main(int argc, char *argv[]) {
 	if(argc !=3) {
 		fprintf(stderr, "usage : ./main [sorttype] [quantity]\n");
-		printf("sort type : \n1.selection sort \n2.insertion sort \n3.bubble sort \n4.shell sort \n5.quick sort \n6.merge sort \n7.heap sort \n");
+		printf("sort type : \n1.selection sort \n2.insertion sort \n3.bubble sort \n4.shell sort \n5.quick sort \n6.merge sort \n7.heap sort \n8.redix sort \n");
 		exit(0);
 	}
 
@@ -52,7 +52,11 @@ main(int argc, char *argv[]) {
 	case HEAP_SORT:
 		heap_sort(array, N);
 		break;
-	
+
+	case RADIX_SORT:
+		radix_sort_LSD(array, N);
+		break;
+
 	default:
 		fprintf(stderr, "\nsort type not find.\n");
 		free(array);
@@ -63,7 +67,7 @@ main(int argc, char *argv[]) {
 	for(i = 0; i < N; i++) {
 		printf("%d ", *(array + i));
 	}
-	printf("\n");
+	putchar('\n');
 
 	free(array);
 
