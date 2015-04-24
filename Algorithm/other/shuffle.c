@@ -23,9 +23,7 @@ shuffle_1(int *array, int n) {
 	int *temp = malloc(sizeof(int) * n);
 
 	for(i = 0; i < n; i++) {
-		while(array[r = (rand() % n)] == -1) {
-			printf("rand value : %d, targetValue : %d\n", r, array[r]);
-		}
+		while(array[r = (rand() % n)] == -1);
 
 		array[r] = -1;
 		temp[i] = r;
