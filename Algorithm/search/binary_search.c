@@ -1,4 +1,4 @@
-#include "search.h"
+#include <stdio.h>
 
 int
 binary_search(int array[], int low, int high, int key) {
@@ -14,4 +14,17 @@ binary_search(int array[], int low, int high, int key) {
 	} else {
 		return binary_search(array, mid + 1, high, key);
 	}
+}
+
+int
+main(void) {
+	int idx, array[] = {1, 2, 3, 4, 6, 10};
+	
+	idx = binary_search(array, 0, 5, 4);
+	printf("search index : %d\n", idx);
+
+	idx = binary_search(array, 0, 5, 20);
+	printf("search index : %d\n", idx);
+
+	return 0;
 }
