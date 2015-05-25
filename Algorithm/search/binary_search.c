@@ -1,3 +1,6 @@
+/**
+ * 二分搜索
+ */
 #include <stdio.h>
 
 int
