@@ -21,12 +21,12 @@ main(int argc, char const *argv[])
 	sockfd = Socket(sockfd, (SA *) &servaddr, sizeof(servaddr));
 
 	while(fgets(sendline, n, stdin) != NULL) {
-		if(sendto(sockfd, sendline, n, 0, servaddr, sizeof(servaddr)) != n) {
+		if(sendto(sockfd, sendline, n, 0, servaddr, sizeof(servaddr)) != n) {	//发送消息给服务端
 			printf("sendto error\n");
 			exit(0);
 		}
 
-		if( (n = recvfrom(sockfd, recvline, MAXLINE, 0, NULL, NULL)) < 0) {
+		if( (n = recvfrom(sockfd, recvline, MAXLINE, 0, NULL, NULL)) < 0) {		//接受服务端回射消息
 			printf("recvfrom error\n");
 			exit(0);
 		} 
