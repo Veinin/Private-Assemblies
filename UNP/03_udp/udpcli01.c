@@ -45,7 +45,7 @@ void dg_client_connect(FILE *fp, int sockfd, const SA *pservaddr, socklen_t serv
 	int n;
 	char sendline[MAXLINE], recvline[MAXLINE + 1];
 
-	Connect(sockfd, (SA *) pservaddr, servlen);
+	Connect(sockfd, (SA *) pservaddr, servlen);	//Connect 检查服务端是否连接正常，接收错误信息, 防止Read阻塞
 
 	while(Fgets(sendline, MAXLINE, fp) != NULL) {
 		Write(sockfd, sendline, strlen(sendline));
