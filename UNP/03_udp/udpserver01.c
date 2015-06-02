@@ -29,14 +29,11 @@ void dg_server_echo(int sockfd, SA *pcliaddr, socklen_t clilen) {
 
 	for( ; ; ) {
 		len = clilen;
-		if((n = recvfrom(sockfd, mesg, MAXLINE, 0, pcliaddr, &len)) < 0) {	//从客户端接受消息
-			printf("recvfrom error\n");
-			exit(0);
-		}
+		n = Recvfrom(sockfd, mesg, MAXLINE, 0, pcliaddr, &len);
 
-		if(sendto(sockfd, mesg, n, 0, pcliaddr, len) != n) {		//回射消息给客户端
-			printf("send error");
-			exit(0);
-		}
+		Fputs("Client : ", stdout);
+		Fputs(mesg, stdout);
+
+		Sendto(sockfd, mesg, n, 0, pcliaddr, len);
 	}
 }
