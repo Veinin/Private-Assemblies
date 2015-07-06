@@ -8,6 +8,12 @@ int main(void) {
 	int begin, end, i;
 	int len = sizeof(array) / sizeof(int);
 
+	printf("before : ");
+	for(i = 0; i < len; i++) {
+		printf("%d ", array[i]);
+	}
+	printf("\n");
+
 	begin = 0;
 	end = len - 1;
 	while(begin < end) {
@@ -17,9 +23,7 @@ int main(void) {
 		while(array[end] % 2 == 0)
 			end--;
 
-		printf("swap %d and %d\n", begin, end);
-
-		if(begin > end)
+		if(begin >= end)
 			break;
 
 		int temp = array[begin];
@@ -27,6 +31,7 @@ int main(void) {
 		array[end] = temp;
 	}
 
+	printf("after  : ");
 	for(i = 0; i < len; i++) {
 		printf("%d ", array[i]);
 	}
