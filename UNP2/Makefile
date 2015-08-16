@@ -2,7 +2,9 @@
 CC=gcc
 CFLAGS=-Wall -g
 
-BIN=01_byteorder 02_addrconvert
+BIN=01_byteorder 02_addrconvert \
+	03_echo_srv_cli/echosrv 03_echo_srv_cli/echocli \
+	04_echo_srv_cli_02/echosrv
 all:$(BIN)
 
 %.o:%.c
