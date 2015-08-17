@@ -1,3 +1,6 @@
+/**
+ * 套接字地址转换函数
+ */
 #include <stdio.h>
 #include <arpa/inet.h>
 

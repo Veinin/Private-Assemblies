@@ -1,3 +1,6 @@
+/**
+ * 简单的socket回射客户端
+ */
 #include <stdio.h>
 #include <error.h>
 #include <string.h>

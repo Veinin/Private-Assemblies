@@ -1,3 +1,6 @@
+/**
+ * 简单的socket回射服务器
+ */
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>

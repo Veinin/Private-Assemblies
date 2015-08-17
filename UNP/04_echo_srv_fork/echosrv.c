@@ -1,3 +1,7 @@
+/**
+ * process per connection
+ * 一个链接一个进程处理并发，服务器的父进程负责监听，接受客户端连接; 子进程负责处理客户端的通信。
+ */
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -24,6 +28,7 @@ void do_service(int connfd)
 		int ret = read(connfd, recvbuf, sizeof(recvbuf));
 		if(ret == 0)
 		{
+			printf("client close\n");
 			close(connfd);
 			break;
 		}
