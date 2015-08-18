@@ -19,6 +19,14 @@
 		exit(EXIT_FAILURE); \
 	} while(0)
 
+struct packet
+{
+        int len;        //包头
+	char buf[1024]; //包缓冲区
+};
+
+
+
 void do_service(int connfd)
 {
 	char recvbuf[1024];
