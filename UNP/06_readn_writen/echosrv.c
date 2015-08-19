@@ -1,11 +1,10 @@
 /**
- * process per connection
- * 一个链接一个进程处理并发，服务器的父进程负责监听，接受客户端连接; 子进程负责处理客户端的通信。
+ * readn_writen
  */
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include <error.h>
+#include <errno.h>
 
 #include <unistd.h>
 #include <sys/types.h>
@@ -25,25 +24,82 @@ struct packet
 	char buf[1024]; //包缓冲区
 };
 
+size_t readn(int fd, void *buf, size_t count)
+{
+	size_t nleft = count;
+	size_t nread;
+	char *bufp = (char*)buf;
 
+	while(nleft > 0)
+	{
+		if((nread = read(fd, buf, nleft)) < 0)
+		{
+			if(errno == EINTR)
+				continue;
+			return -1;
+		}
+		else if(nread == 0)
+			return count - nleft;
+
+		bufp += nread;
+		nleft -= nread;
+	}
+
+	return count;
+}
+
+size_t writen(int fd, const void *buf, size_t count)
+{
+	size_t nleft = count;
+	size_t nwrite;
+	char *bufp = (char*)buf;
+
+	while(nleft > 0)
+	{
+		if((nwrite = write(fd, buf, nleft)) < 0)
+		{
+			if(errno == EINTR)
+				continue;
+			return -1;
+		}
+		else if(nwrite == 0)
+			return count - nleft;
+
+		bufp += nwrite;
+		nleft -= nwrite;
+	}
+
+	return count;
+}
 
 void do_service(int connfd)
 {
-	char recvbuf[1024];
+	struct packet recvbuf;
+	int n;
 	while(1)
 	{
 		memset(&recvbuf, 0, sizeof(recvbuf));
-		int ret = read(connfd, recvbuf, sizeof(recvbuf));
-		if(ret == 0)
+		int ret = readn(connfd, &recvbuf.len, 4);
+		if(ret == -1)
+			ERR_EXIT("read");
+		else if(ret < 4)
 		{
 			printf("client close\n");
-			close(connfd);
 			break;
 		}
-		else if(ret == -1)
+		
+		n = ntohl(recvbuf.len);
+		ret = readn(connfd, &recvbuf.buf, n);
+		if(ret == -1)
 			ERR_EXIT("read");
-		printf("receve from cliend message : %s", recvbuf);
-		write(connfd, recvbuf, ret);
+		else if(ret < n)
+		{
+			printf("client close\n");
+			break;
+		}
+
+		printf("client message : %s", recvbuf.buf);
+		writen(connfd, &recvbuf, 4 + n);
 	}
 }
 

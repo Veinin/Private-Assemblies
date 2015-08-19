@@ -2,7 +2,7 @@
  * readn - writen 
  */
 #include <stdio.h>
-#include <error.h>
+#include <errno.h>
 #include <string.h>
 #include <stdlib.h>
 
@@ -29,9 +29,10 @@ ssize_t readn(int fd, void *buf, size_t count)
 	size_t nleft = count;
 	size_t nread;
 	char *bufp = (char*)buf;
+	
 	while(nleft > 0)
 	{
-		if((nread = read(fd, buf, nleft) < 0)
+		if((nread = read(fd, buf, nleft)) < 0)
 		{
 			if(errno == EINTR)
 				continue;
@@ -52,6 +53,7 @@ ssize_t writen(int fd, const void *buf, size_t count)
 	size_t nleft = count;
 	size_t nwrite;
 	char *bufp = (char*)buf;
+	
 	while(nleft > 0)
 	{
 		if((nwrite = write(fd, buf, nleft)) < 0)
@@ -82,7 +84,7 @@ int main(void)
 	servaddr.sin_port = htons(8888);
 	servaddr.sin_addr.s_addr = inet_addr("127.0.0.1");
 
-	if(connect(sockfd, (struct sockaddr*)&servaddr, sizeof(servaddr)) < 0)
+	if(connect(sockfd, (struct sockaddr*)&servaddr, sizeof(servaddr)) < 0) 
 		ERR_EXIT("connect");
 
 	struct packet sendbuf;
@@ -92,12 +94,31 @@ int main(void)
 	int n;
 	while(fgets(sendbuf.buf, sizeof(sendbuf.buf), stdin) != NULL) 
 	{
+		//发送
 		n = strlen(sendbuf.buf);
-		sendbuf.len = htons(n);
-		writen(sockfd, sendbuf, 4 + n);
-		readn(sockfd, recvbuf, sizeof(recvbuf));
-		printf("receive message : %s", recvbuf);
+		sendbuf.len = htonl(n);
+		writen(sockfd, &sendbuf, 4 + n);
+	
+		//接收
+		int ret = readn(sockfd, &recvbuf.len, 4); if(ret == -1)
+			ERR_EXIT("read");
+		else if(ret == 0)
+		{
+			printf("server close\n");
+			break;
+		}
 
+		n = ntohl(recvbuf.len);
+		ret = readn(sockfd, &recvbuf.buf, n);
+		if(ret == -1)
+			ERR_EXIT("read");
+		else if(ret == 0)
+		{
+			printf("server close\n");
+			break;
+		}
+
+		printf("receive message : %s", recvbuf.buf);
 		memset(&sendbuf, 0, sizeof(sendbuf));
 		memset(&recvbuf, 0, sizeof(recvbuf));
 	}
