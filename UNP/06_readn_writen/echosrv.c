@@ -1,5 +1,5 @@
 /**
- * readn_writen
+ * readn - writen - server
  */
 #include <stdio.h>
 #include <string.h>
@@ -79,6 +79,7 @@ void do_service(int connfd)
 	while(1)
 	{
 		memset(&recvbuf, 0, sizeof(recvbuf));
+		//接收包头部
 		int ret = readn(connfd, &recvbuf.len, 4);
 		if(ret == -1)
 			ERR_EXIT("read");
@@ -88,6 +89,7 @@ void do_service(int connfd)
 			break;
 		}
 		
+		//接收包内容
 		n = ntohl(recvbuf.len);
 		ret = readn(connfd, &recvbuf.buf, n);
 		if(ret == -1)
@@ -99,6 +101,7 @@ void do_service(int connfd)
 		}
 
 		printf("client message : %s", recvbuf.buf);
+		//回射给客户端
 		writen(connfd, &recvbuf, 4 + n);
 	}
 }

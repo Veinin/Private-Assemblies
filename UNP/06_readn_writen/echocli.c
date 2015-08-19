@@ -1,5 +1,5 @@
 /**
- * readn - writen 
+ * readn - writen - client 
  */
 #include <stdio.h>
 #include <errno.h>
@@ -99,7 +99,7 @@ int main(void)
 		sendbuf.len = htonl(n);
 		writen(sockfd, &sendbuf, 4 + n);
 	
-		//接收
+		//接收包头部
 		int ret = readn(sockfd, &recvbuf.len, 4); if(ret == -1)
 			ERR_EXIT("read");
 		else if(ret == 0)
@@ -108,6 +108,7 @@ int main(void)
 			break;
 		}
 
+		//接受包内容
 		n = ntohl(recvbuf.len);
 		ret = readn(sockfd, &recvbuf.buf, n);
 		if(ret == -1)
