@@ -1,117 +1,42 @@
 /**
  * readn - writen - server
  */
+#include "../unp.h"
+
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include <errno.h>
 
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <arpa/inet.h>
 
-#define ERR_EXIT(m) \
-	do \
-	{ \
-		perror(m); \
-		exit(EXIT_FAILURE); \
-	} while(0)
-
-struct packet
+void
+do_service(int connfd)
 {
-        int len;        //包头
-	char buf[1024]; //包缓冲区
-};
-
-size_t readn(int fd, void *buf, size_t count)
-{
-	size_t nleft = count;
-	size_t nread;
-	char *bufp = (char*)buf;
-
-	while(nleft > 0)
-	{
-		if((nread = read(fd, buf, nleft)) < 0)
-		{
-			if(errno == EINTR)
-				continue;
-			return -1;
-		}
-		else if(nread == 0)
-			return count - nleft;
-
-		bufp += nread;
-		nleft -= nread;
-	}
-
-	return count;
-}
-
-size_t writen(int fd, const void *buf, size_t count)
-{
-	size_t nleft = count;
-	size_t nwrite;
-	char *bufp = (char*)buf;
-
-	while(nleft > 0)
-	{
-		if((nwrite = write(fd, buf, nleft)) < 0)
-		{
-			if(errno == EINTR)
-				continue;
-			return -1;
-		}
-		else if(nwrite == 0)
-			return count - nleft;
-
-		bufp += nwrite;
-		nleft -= nwrite;
-	}
-
-	return count;
-}
-
-ssize_t recv_peek(int sockfd, void *buf, size_t len)
-{
-	
-}
-
-void do_service(int connfd)
-{
-	struct packet recvbuf;
-	int n;
+	char recvbuf[1024];
 	while(1)
 	{
 		memset(&recvbuf, 0, sizeof(recvbuf));
 		//接收包头部
-		int ret = readn(connfd, &recvbuf.len, 4);
-		if(ret == -1)
-			ERR_EXIT("read");
-		else if(ret < 4)
+		int ret = readline(connfd, recvbuf, sizeof(recvbuf));
+		if (ret == -1)
+			ERR_EXIT("readline");
+		else if (ret == 0)
 		{
 			printf("client close\n");
 			break;
 		}
 		
-		//接收包内容
-		n = ntohl(recvbuf.len);
-		ret = readn(connfd, &recvbuf.buf, n);
-		if(ret == -1)
-			ERR_EXIT("read");
-		else if(ret < n)
-		{
-			printf("client close\n");
-			break;
-		}
-
-		printf("client message : %s", recvbuf.buf);
+		printf("client : %s", recvbuf);
 		//回射给客户端
-		writen(connfd, &recvbuf, 4 + n);
+		writen(connfd, recvbuf, strlen(recvbuf));
 	}
 }
 
-int main(void)
+int
+main(void)
 {
 	int listenfd;
 	if((listenfd = socket(AF_INET, SOCK_STREAM, 0)) < 0)

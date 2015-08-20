@@ -5,10 +5,11 @@ CFLAGS = -g
 
 LIB_DYNAMIC_NAME = ../unp.so
 LIB_STATIC_NAME = ../unp.a
-LIB_OBJS = readn.c writen.c
+LIB_OBJS = readn.o writen.o readline.o
 
-all : 
-	ar -r $(LIB_STATIC_NAME) $(LIB_OBJS)
+all : $(LIB_OBJS) 
+	ar -rcs $(LIB_STATIC_NAME) $(LIB_OBJS)
+	rm *.o
 
 dynamic :
 	$(CC) -shared -fPIC -o $(LIB_DYNAMIC_NAME) $(LIB_OBJS)
