@@ -2,22 +2,15 @@
  * process per connection
  * 一个链接一个进程处理并发，服务器的父进程负责监听，接受客户端连接; 子进程负责处理客户端的通信。
  */
+#include "../unp.h"
+
 #include <stdio.h>
 #include <string.h>
-#include <stdlib.h>
-#include <error.h>
 
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <arpa/inet.h>
-
-#define ERR_EXIT(m) \
-	do \
-	{ \
-		perror(m); \
-		exit(EXIT_FAILURE); \
-	} while(0)
 
 void do_service(int connfd)
 {
@@ -34,7 +27,7 @@ void do_service(int connfd)
 		}
 		else if(ret == -1)
 			ERR_EXIT("read");
-		printf("receve from cliend message : %s", recvbuf);
+		printf("client : %s", recvbuf);
 		write(connfd, recvbuf, ret);
 	}
 }
@@ -71,7 +64,7 @@ int main(void)
 		if((connfd = accept(listenfd, (struct sockaddr*)&cliaddr, &cliaddrlen)) < 0)
 			ERR_EXIT("accept");
 
-		printf("new client ip : %s, port : %d\n", inet_ntoa(cliaddr.sin_addr), ntohs(cliaddr.sin_port));
+		printf("client ip : %s, port : %d\n", inet_ntoa(cliaddr.sin_addr), ntohs(cliaddr.sin_port));
 
 		pid = fork();
 		if(pid < 0)

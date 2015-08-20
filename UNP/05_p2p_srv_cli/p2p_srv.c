@@ -1,23 +1,16 @@
 /**
  * 点对点聊天程序 - 服务器端
  */
+#include "../unp.h"
+
 #include <stdio.h>
 #include <string.h>
-#include <stdlib.h>
-#include <error.h>
-#include <signal.h>
 
+#include <signal.h>
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <arpa/inet.h>
-
-#define ERR_EXIT(m) \
-	do \
-	{ \
-		perror(m); \
-		exit(EXIT_FAILURE); \
-	} while(0)
 
 void handler(int signo)
 {
@@ -49,7 +42,7 @@ int main(void)
 	if((connfd = accept(listenfd, (struct sockaddr*)&cliaddr, &cliaddrlen)) < 0)
 		ERR_EXIT("accept");
 	else
-		printf("client ip address : %s\n", inet_ntoa(cliaddr.sin_addr));
+		printf("client ip : %s, port : %d\n", inet_ntoa(cliaddr.sin_addr), ntohs(cliaddr.sin_port));
 
 	pid_t pid;
 	pid = fork();

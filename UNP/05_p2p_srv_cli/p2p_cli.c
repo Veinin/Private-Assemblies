@@ -1,23 +1,16 @@
 /**
  * 点对点聊天程序 - 客户端
  */
-#include <stdio.h>
-#include <error.h>
-#include <string.h>
-#include <stdlib.h>
-#include <signal.h>
+#include "../unp.h"
 
+#include <stdio.h>
+#include <string.h>
+
+#include <signal.h>
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <arpa/inet.h>
-
-#define ERR_EXIT(m) \
-	do \
-	{ \
-		perror(m); \
-		exit(EXIT_FAILURE); \
-	} while(0)
 
 void handler(int signo)
 {

@@ -1,0 +1,8 @@
+CC = gcc
+CFLAGS = -g 
+
+LIB_NAME = ../unp.so
+LIB_OBJS = readn.c writen.c
+
+all : 
+	$(CC) -shared -fPIC -o $(LIB_NAME) $(LIB_OBJS)

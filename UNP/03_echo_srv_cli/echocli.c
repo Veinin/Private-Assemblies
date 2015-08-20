@@ -1,22 +1,15 @@
 /**
  * 简单的socket回射客户端
  */
+#include "../unp.h"
+
 #include <stdio.h>
-#include <error.h>
 #include <string.h>
-#include <stdlib.h>
 
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <arpa/inet.h>
-
-#define ERR_EXIT(m) \
-	do \
-	{ \
-		perror(m); \
-		exit(EXIT_FAILURE); \
-	} while(0)
 
 int main(void)
 {
@@ -27,7 +20,7 @@ int main(void)
 	struct sockaddr_in servaddr;
 	memset(&servaddr, 0, sizeof(servaddr));
 	servaddr.sin_family = AF_INET;
-	servaddr.sin_port = htons(8888);
+	servaddr.sin_port = htons(SERV_PORT);
 	servaddr.sin_addr.s_addr = inet_addr("127.0.0.1");
 
 	if(connect(sockfd, (struct sockaddr*)&servaddr, sizeof(servaddr)) < 0)
@@ -39,7 +32,7 @@ int main(void)
 	{
 		write(sockfd, sendbuf, strlen(sendbuf));
 		read(sockfd, recvbuf, sizeof(recvbuf));
-		printf("receive from server, message : %s", recvbuf);
+		printf("server : %s", recvbuf);
 
 		memset(&sendbuf, 0, sizeof(sendbuf));
 		memset(&recvbuf, 0, sizeof(recvbuf));
