@@ -5,7 +5,7 @@ CFLAGS = -g
 
 LIB_DYNAMIC_NAME = ../unp.so
 LIB_STATIC_NAME = ../unp.a
-LIB_OBJS = readn.o writen.o readline.o
+LIB_OBJS = readn.o writen.o readline.o gethostaddr.o
 
 all : $(LIB_OBJS) 
 	ar -rcs $(LIB_STATIC_NAME) $(LIB_OBJS)
