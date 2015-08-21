@@ -21,7 +21,7 @@ void do_service(int connfd)
 		int ret = read(connfd, recvbuf, sizeof(recvbuf));
 		if(ret == 0)
 		{
-			printf("client close\n");
+			printf("server close\n");
 			close(connfd);
 			break;
 		}
@@ -64,7 +64,7 @@ int main(void)
 		if((connfd = accept(listenfd, (struct sockaddr*)&cliaddr, &cliaddrlen)) < 0)
 			ERR_EXIT("accept");
 
-		printf("client ip : %s, port : %d\n", inet_ntoa(cliaddr.sin_addr), ntohs(cliaddr.sin_port));
+		printf("ip : %s, port : %d\n", inet_ntoa(cliaddr.sin_addr), ntohs(cliaddr.sin_port));
 
 		pid = fork();
 		if(pid < 0)

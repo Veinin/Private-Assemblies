@@ -34,13 +34,13 @@ main(void)
 		//发送
 		writen(sockfd, sendbuf, strlen(sendbuf));
 	
-		//接收包头部
+		//接收一行消息
 		int ret = readline(sockfd, recvbuf, sizeof(recvbuf));
 		if (ret == -1)
 			ERR_EXIT("readline");
 		else if(ret == 0)
 		{
-			printf("server close\n");
+			printf("client close\n");
 			break;
 		}
 

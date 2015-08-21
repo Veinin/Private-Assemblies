@@ -36,7 +36,7 @@ echo_srv(int connfd)
 			ERR_EXIT("readline");
 		else if (ret == 0)
 		{
-			printf("client close\n");
+			printf("server close\n");
 			break;
 		}
 		

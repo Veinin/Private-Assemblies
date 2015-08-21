@@ -19,13 +19,13 @@ do_service(int connfd)
 	while(1)
 	{
 		memset(&recvbuf, 0, sizeof(recvbuf));
-		//接收包头部
+		//接收一行消息
 		int ret = readline(connfd, recvbuf, sizeof(recvbuf));
 		if (ret == -1)
 			ERR_EXIT("readline");
 		else if (ret == 0)
 		{
-			printf("client close\n");
+			printf("server close\n");
 			break;
 		}
 		

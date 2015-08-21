@@ -28,7 +28,7 @@ echo_cli(int sockfd)
 			ERR_EXIT("readline");
 		else if (ret == 0)
 		{
-			printf("server close\n");
+			printf("client close\n");
 			break;
 		}
 

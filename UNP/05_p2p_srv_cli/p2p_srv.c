@@ -42,7 +42,7 @@ int main(void)
 	if((connfd = accept(listenfd, (struct sockaddr*)&cliaddr, &cliaddrlen)) < 0)
 		ERR_EXIT("accept");
 	else
-		printf("client ip : %s, port : %d\n", inet_ntoa(cliaddr.sin_addr), ntohs(cliaddr.sin_port));
+		printf("ip : %s, port : %d\n", inet_ntoa(cliaddr.sin_addr), ntohs(cliaddr.sin_port));
 
 	pid_t pid;
 	pid = fork();

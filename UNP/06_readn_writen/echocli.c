@@ -60,7 +60,7 @@ int main(void)
 			ERR_EXIT("read");
 		else if(ret == 0)
 		{
-			printf("server close\n");
+			printf("client close\n");
 			break;
 		}
 

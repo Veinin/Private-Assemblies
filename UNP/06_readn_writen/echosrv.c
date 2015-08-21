@@ -96,7 +96,7 @@ void do_service(int connfd)
 			ERR_EXIT("read");
 		else if(ret < n)
 		{
-			printf("client close\n");
+			printf("server close\n");
 			break;
 		}
 
