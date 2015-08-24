@@ -36,7 +36,5 @@ main(void)
 
 	struct sockaddr_in servaddr;
 
-	if ((
-
 	return 0;
 }
