@@ -3,8 +3,6 @@
  */
 #include "../unp.h"
 
-#include <sys/select.h>
-
 void
 echo_cli(int sockfd)
 {
