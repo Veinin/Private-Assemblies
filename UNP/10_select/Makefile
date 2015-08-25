@@ -8,10 +8,10 @@ PROGS = echosrv echocli
 
 all : $(PROGS)
 
-echosrv : 
+echosrv : echosrv.c
 	$(CC) $(CFLAGS) -o $@ echosrv.c $(LIB)
 
-echocli :
+echocli : echocli.c
 	$(CC) $(CFLAGS) -o $@ echocli.c $(LIB)
 
 clean:
