@@ -4,15 +4,18 @@ CC = gcc
 CFLAGS = -Wall -g -fPIC
 LIB = ../unp.a
 
-PROGS = echosrv echocli
+PROGS = selectsrv selectcli conntest
 
 all : $(PROGS)
 
-echosrv : echosrv.c
-	$(CC) $(CFLAGS) -o $@ echosrv.c $(LIB)
+selectsrv : selectsrv.c
+	$(CC) $(CFLAGS) -o $@ selectsrv.c $(LIB)
 
-echocli : echocli.c
-	$(CC) $(CFLAGS) -o $@ echocli.c $(LIB)
+selectcli : selectcli.c
+	$(CC) $(CFLAGS) -o $@ selectcli.c $(LIB)
+
+conntest : conntest.c
+	$(CC) $(CFLAGS) -o $@ conntest.c $(LIB)
 
 clean:
 	rm -f $(PROGS)

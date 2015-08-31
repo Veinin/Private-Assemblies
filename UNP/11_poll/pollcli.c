@@ -6,40 +6,36 @@
 void
 echo_cli(int sockfd)
 {
-	fd_set rset;
-	FD_ZERO(&rset);
-
 	int nready;
-	int maxfd;
-	int fd_stdin = fileno(stdin);
-	if (fd_stdin > sockfd)
-		maxfd = fd_stdin;
-	else
-		maxfd = sockfd;
+
+	struct pollfd pollfds[2];
+	
+	pollfds[0].fd = sockfd;
+	pollfds[0].events = POLLIN;
+
+	pollfds[1].fd = fileno(stdin);
+	pollfds[1].events = POLLOUT;
 
 	char sendbuf[1024] = {0};
 	char recvbuf[1024] = {0};
 
 	while (1)
 	{
-		FD_SET(sockfd, &rset);
-		FD_SET(fd_stdin, &rset);
-
-		nready = select(maxfd + 1, &rset, NULL, NULL, NULL);
+		nready = poll(pollfds, 2, -1);
 		if (nready == -1)
 			ERR_EXIT("select");
 
 		if (nready == 0)
 			continue;
 
-		if (FD_ISSET(sockfd, &rset))
+		if (pollfds[0].revents & POLLIN)
 		{
 			int ret = readline(sockfd, recvbuf, sizeof(recvbuf));
 			if (ret == -1)
 				ERR_EXIT("readline");
 			else if(ret == 0)
 			{
-				printf("client close\n");
+				printf("server close\n");
 				break;
 			}
 
@@ -47,7 +43,7 @@ echo_cli(int sockfd)
 			memset(recvbuf, 0, sizeof(recvbuf));
 		}
 
-		if (FD_ISSET(fd_stdin, &rset))
+		if (pollfds[1].revents & POLLOUT)
 		{
 			if (fgets(sendbuf, sizeof(sendbuf), stdin) == NULL)
 				break;
