@@ -4,15 +4,15 @@ CC = gcc
 CFLAGS = -Wall -g -fPIC
 LIB = ../unp.a
 
-PROGS = pollsrv pollcli
+PROGS = echosrv echocli
 
 all : $(PROGS)
 
-pollsrv : pollsrv.c
-	$(CC) $(CFLAGS) -o $@ pollsrv.c $(LIB)
+echosrv : echosrv.c
+	$(CC) $(CFLAGS) -o $@ echosrv.c $(LIB)
 
-pollcli : pollcli.c
-	$(CC) $(CFLAGS) -o $@ pollcli.c $(LIB)
+echocli : echocli.c
+	$(CC) $(CFLAGS) -o $@ echocli.c $(LIB)
 
 clean:
 	rm -f $(PROGS)
