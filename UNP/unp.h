@@ -13,9 +13,11 @@
 #include <sys/types.h>
 #include <sys/select.h>
 #include <arpa/inet.h>
+#include <sys/un.h>
 
 #define SERV_PORT 8888
 #define POLL_FD_SIZE 2048
+#define UNIX_DOMAIN_SOCKET_NAME "test_socket"
 
 #define ERR_EXIT(m) \
 	do \
