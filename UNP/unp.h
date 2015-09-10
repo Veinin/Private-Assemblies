@@ -17,7 +17,7 @@
 
 #define SERV_PORT 8888
 #define POLL_FD_SIZE 2048
-#define UNIX_DOMAIN_SOCKET_NAME "test_socket"
+#define UNIX_DOMAIN_PATH "/tmp/test_socket"
 
 #define ERR_EXIT(m) \
 	do \

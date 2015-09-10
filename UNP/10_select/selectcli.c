@@ -7,7 +7,6 @@ void
 echo_cli(int sockfd)
 {
 	fd_set rset;
-	FD_ZERO(&rset);
 
 	int nready;
 	int maxfd;
@@ -22,6 +21,7 @@ echo_cli(int sockfd)
 
 	while (1)
 	{
+		FD_ZERO(&rset);
 		FD_SET(sockfd, &rset);
 		FD_SET(fd_stdin, &rset);
 
